@@ -5,7 +5,7 @@ services:
     image: httpd:latest
     container_name: apache-server
     ports:
-      - "80:80"            # Porta HTTP
+      - "8080:80"            # Porta HTTP
       - "443:443"          # Porta HTTPS (caso queira habilitar)
     volumes:
       - ./app:/usr/local/apache2/htdocs      # Mapeia a pasta da aplicação para o diretório do Apache
