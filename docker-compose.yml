@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  apache:
+    image: httpd:latest
+    container_name: apache-server
+    ports:
+      - "80:80"            # Porta HTTP
+      - "443:443"          # Porta HTTPS (caso queira habilitar)
+    volumes:
+      - ./app:/usr/local/apache2/htdocs      # Mapeia a pasta da aplicação para o diretório do Apache
+      - ./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf  # Configuração customizada do Apache
+      - ./apache/default-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf # Configuração SSL
+      - ./logs:/usr/local/apache2/logs      # Mapeamento de logs
+      - ./apache/ssl:/usr/local/apache2/conf/ssl  # Mapeamento dos certificados SSL
+    environment:
+      - APACHE_DOCUMENT_ROOT=/usr/local/apache2/htdocs
+    networks:
+      - webnet
+    restart: always
+
+networks:
+  webnet:
+    driver: bridge
